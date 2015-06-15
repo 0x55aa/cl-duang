@@ -27,8 +27,8 @@
   "
   `(defmacro ,name (&optional (msg-level :debug) (msg "nil"))
      (let ((msg-level-num (gensym)))
-       `(let ((,msg-level-num (position ,msg-level +levels+)))
+       `(let ((,msg-level-num ,(position msg-level +levels+)))
          (if ,msg-level-num
-           (if (<= ,msg-level-num (position ,,level +levels+))
+           (if (<= ,msg-level-num ,(position ,level +levels+))
              (write-log ,msg-level-num ,msg ,,output))
            (error "level must in ~A~%" +levels+))))))
