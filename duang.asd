@@ -5,6 +5,7 @@
   :author "0x55aa <admin@0x55aa.com>"
   :license "BSD"
   :version "0.0.1"
-  :depends-on (#:cl-async)
+  :depends-on (#:cl-async #:bordeaux-threads)
   :components ((:file "package")
-               (:file "server")))
+               (:file "server")
+               (:file "logging")))

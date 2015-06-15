@@ -1,5 +1,7 @@
 (in-package :duang)
 
+(duang:get-logger server-logger)
+
 
 (defun write-headers ()
   ;; 
@@ -31,6 +33,8 @@
 
 (defun start-server (&optional (port 8000) (address "0.0.0.0"))
   ;; start server
+  (format t "Starting server at ~a:~a~%Quit the server with CONTROL-C.~%" address port)
+  (server-logger :info "~%starting~%")
   (as:with-event-loop ()
     (as:tcp-server address port
                    'read-callback
