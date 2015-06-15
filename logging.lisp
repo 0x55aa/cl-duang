@@ -13,7 +13,7 @@
   ;;
   `(format ,output "[~A][~A][~A] ~A~%" (get-universal-time)
            (bt:thread-name (bt:current-thread))
-           (svref +levels+ ,msg-level)
+           ,msg-level
            ,msg))
 
 
@@ -26,9 +26,5 @@
   ;;         string, write to file.
   "
   `(defmacro ,name (&optional (msg-level :debug) (msg "nil"))
-     (let ((msg-level-num (gensym)))
-       `(let ((,msg-level-num ,(position msg-level +levels+)))
-         (if ,msg-level-num
-           (if (<= ,msg-level-num ,(position ,level +levels+))
-             (write-log ,msg-level-num ,msg ,,output))
-           (error "level must in ~A~%" +levels+))))))
+     (if (<= (position msg-level +levels+) (position ,level +levels+))
+       `(write-log ,msg-level ,msg ,,output))))
