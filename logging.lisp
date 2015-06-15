@@ -26,5 +26,6 @@
   ;;         string, write to file.
   "
   `(defmacro ,name (&optional (msg-level :debug) (msg "nil"))
-     (if (<= (position msg-level +levels+) (position ,level +levels+))
+     (if (handler-case (<= (position msg-level +levels+) (position ,level +levels+))
+           (TYPE-ERROR () (error "level must in ~A~%" +levels+)))
        `(write-log ,msg-level ,msg ,,output))))
