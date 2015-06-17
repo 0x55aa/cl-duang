@@ -9,10 +9,10 @@
 (defparameter +levels+ (vector :error :warning :info :debug))
 
 
-(defmacro write-log (msg-level msg output)
+(defmacro write-log (name msg-level msg output)
   ;;
   `(format ,output "[~A][~A][~A] ~A~%" (get-universal-time)
-           (bt:thread-name (bt:current-thread))
+           ,name
            ,msg-level
            ,msg))
 
@@ -28,4 +28,4 @@
   `(defmacro ,name (&optional (msg-level :debug) (msg "nil"))
      (if (handler-case (<= (position msg-level +levels+) (position ,level +levels+))
            (TYPE-ERROR () (error "level must in ~A~%" +levels+)))
-       `(write-log ,msg-level ,msg ,,output))))
+       `(write-log ',',name ,msg-level ,msg ,,output))))
