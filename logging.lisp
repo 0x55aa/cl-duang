@@ -5,6 +5,7 @@
 ;; output
 ;; msg list
 
+
 ;; defconstant error
 (defparameter +levels+ (vector :error :warning :info :debug))
 
@@ -19,8 +20,8 @@
   ;; return log macro
   ;; name: log macro name
   ;; level: output level
-  ;; output: default T, log write to *STANDARD-OUTPUT*;
-  ;;         string, write to file.
+  ;; output: like FORMAT. default T, log write to *STANDARD-OUTPUT*;
+  ;;         stream, write to stream 
   "
   `(defmacro ,name (&optional (msg-level :debug) (msg "nil"))
      (if (handler-case (<= (position msg-level +levels+) (position ,level +levels+))
