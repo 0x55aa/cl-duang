@@ -10,11 +10,8 @@
 
 
 (defmacro write-log (name msg-level msg output)
-  ;;
-  `(format ,output "[~A][~A][~A] ~A~%" (get-universal-time)
-           ,name
-           ,msg-level
-           ,msg))
+  ;; 
+  `(format ,output "[~A][~A][~A] ~A~%" (time-to-string) ,name ,msg-level ,msg))
 
 
 (defmacro get-logger (name &key (level :debug) (output t))

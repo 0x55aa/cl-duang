@@ -4,6 +4,5 @@
   (:nicknames dg)
   (:export #:start-server
            #:get-logger
-
-           #:is-hight-level
+           #:time-to-string
            ))
