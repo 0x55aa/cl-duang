@@ -4,6 +4,8 @@
 (defmacro get-read-callback (app)
   ;;
   `(lambda (socket data)
+     (parse-request app data)
+     (call-handler)
      (defparameter h (make-hash-table))
      (setf (gethash '|Server| h) "SBCL-Duang/0.1")
      (setf (gethash '|Content-Length| h) "11")
@@ -23,3 +25,8 @@
 (defmethod start-app-server ((application application) &optional (address "0.0.0.0") (port 8000))
   ;;
   (start-server (get-read-callback application) port address))
+
+(defmethod call-handler ()
+  ;;
+  ()
+  )
