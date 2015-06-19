@@ -7,6 +7,7 @@
   :version "0.0.1"
   :depends-on (#:cl-async)
   :components ((:file "package")
-               (:file "server")
                (:file "util")
-               (:file "logging")))
+               (:file "logging")
+               (:file "server")
+               (:file "web")))

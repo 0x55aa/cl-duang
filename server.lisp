@@ -28,17 +28,6 @@
   (as:write-socket-data socket data))
 
 
-(defun read-callback (socket data)
-  ;; 
-  (format t "data: ~a~%" data)
-  (defparameter h (make-hash-table))
-  (setf (gethash '|Server| h) "SBCL-Duang/0.1")
-  (setf (gethash '|Content-Length| h) "11")
-  (write-headers socket h 200 "OK")
-  (defparameter body-data "Hello World")
-  (write-body socket body-data))
-
-
 (defun event-callback (ev)
   ;;
   (format t "ev: ~a~%" ev))
@@ -49,12 +38,12 @@
   (format t "connect: ~a~%" socket))
 
 
-(defun start-server (&optional (port 8000) (address "0.0.0.0"))
+(defun start-server (read-callback-func &optional (port 8000) (address "0.0.0.0"))
   ;; start server
   (format t "Starting server at ~a:~a~%Quit the server with CONTROL-C.~%" address port)
   (server-logger :info "starting server")
   (as:with-event-loop ()
     (as:tcp-server address port
-                   'read-callback
+                   read-callback-func
                    :event-cb 'event-callback
                    :connect-cb 'connect-callback)))

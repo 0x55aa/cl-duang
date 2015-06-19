@@ -2,7 +2,8 @@
 (defpackage :duang
   (:use :common-lisp :cl-async)
   (:nicknames dg)
-  (:export #:start-server
-           #:get-logger
+  (:export #:get-logger
            #:time-to-string
+           #:application
+           #:start-app-server
            ))
