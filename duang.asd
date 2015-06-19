@@ -9,5 +9,7 @@
   :components ((:file "package")
                (:file "util")
                (:file "logging")
+
                (:file "server")
+               (:file "request")
                (:file "web")))

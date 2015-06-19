@@ -4,7 +4,7 @@
 (defmacro get-read-callback (app)
   ;;
   `(lambda (socket data)
-     (parse-request app data)
+     (parse-request ,app data)
      (call-handler)
      (defparameter h (make-hash-table))
      (setf (gethash '|Server| h) "SBCL-Duang/0.1")
