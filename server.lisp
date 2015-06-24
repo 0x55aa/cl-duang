@@ -46,4 +46,10 @@
     (as:tcp-server address port
                    read-callback-func
                    :event-cb 'event-callback
-                   :connect-cb 'connect-callback)))
+                   :connect-cb 'connect-callback)
+
+    ;; catch SIGINT
+    (as:signal-handler 2 (lambda (sig)
+                           (declare (ignore sig))
+                           (server-logger :info "stop server")
+                           (as:exit-event-loop)))))
