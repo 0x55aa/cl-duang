@@ -11,6 +11,12 @@
      (setf (gethash '|Content-Length| h) "11")
      (write-headers socket h 200 "OK")
      (defparameter body-data "Hello World")
+
+     ;; (sleep 10)
+     (as:delay
+      (lambda ()
+        (format t "Timer fired. Exiting.~%"))
+      :time 13)
      (write-body socket body-data)))
 
 

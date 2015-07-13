@@ -5,7 +5,8 @@
   :author "0x55aa <admin@0x55aa.com>"
   :license "BSD"
   :version "0.0.1"
-  :depends-on (#:cl-async)
+  :depends-on (#:cl-async
+               #:blackbird)
   :components ((:file "package")
                (:file "util")
                (:file "logging")

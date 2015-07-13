@@ -49,7 +49,7 @@
                    :connect-cb 'connect-callback)
 
     ;; catch SIGINT
-    (as:signal-handler 2 (lambda (sig)
+    (as:signal-handler as:+sigint+ (lambda (sig)
                            (declare (ignore sig))
                            (server-logger :info "stop server")
                            (as:exit-event-loop)))))

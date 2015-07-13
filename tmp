@@ -1,2 +1,9 @@
 (ql:quickload "duang")
 (macroexpand-1 '())
+;;
+
+
+TODO:
+
+settings 配置debug等级
+
