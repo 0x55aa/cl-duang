@@ -16,3 +16,14 @@
   (apply #'concatenate 'string
          (loop for byte-code across data
                collect (format nil "~c" (code-char byte-code)))))
+
+
+
+(defun split-by-one-space (string)
+  "
+  ;; split string
+  "
+  (loop for i = 0 then (1+ j)
+        as j = (position #\Space string :start i)
+        collect (subseq string i j)
+        while j))
