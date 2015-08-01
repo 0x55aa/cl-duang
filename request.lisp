@@ -23,7 +23,7 @@
    (path :accessor path)
    (uri :accessor uri)
    (query :accessor query)
-   (headers :accessor headers)
+   (headers :accessor headers :initform (make-hash-table))
    (body :accessor body)
    ;; remote-ip host
    ;; arguments query-arguments body-arguments files cookies
@@ -33,18 +33,24 @@
 (defmethod parse-header ((req request) data)
   ;;
   ;; TODO: exception
-  (let* ((index (search (format nil "~C~C" #\Return #\Linefeed)
-                       data))
-         (header-result (split-by-one-space (subseq data 0 index))))
-    ;; TODO: header-result len
-    (setf (req-method req) (first header-result))
-    (setf (path req) (second header-result))
-    (setf (version req) (third header-result))
+  (let* ((index (search (rn) data))
+         (first-line (split-by-one-char (subseq data 0 index)))
+         (other-lines (split-str (subseq data (+ index 2)) (rn))))
+    ;; TODO: header len
+    (setf (req-method req) (first first-line))
+    (setf (path req) (second first-line))
+    (setf (version req) (third first-line))
 
-    (server-logger :debug (format nil "method: ~A" (req-method req)))
-    (server-logger :debug (format nil "path: ~A" (path req)))
-    (server-logger :debug (format nil "version: ~A" (version req)))
-    ;; (split-by-one-space (subseq data (+ index 2)))
+    (server-logger :debug (format nil "Method: ~A" (req-method req)))
+    (server-logger :debug (format nil "Path: ~A" (path req)))
+    (server-logger :debug (format nil "Version: ~A" (version req)))
+    ;; other
+    (mapcar #'(lambda (line)
+                (server-logger :debug (format nil "Line: ~A" line))
+                (let* ((k-v (split-by-one-char line #\:)))
+                  (setf (gethash (first k-v) (headers req)) (trim-blank (second k-v)))))
+            other-lines)
+    (maphash #'(lambda (k v) (format t "~A~A" k v)) (headers req))
 
     ))
 
@@ -60,6 +66,7 @@
   (multiple-value-bind (header-data body-data) (split-header-body data)
   (server-logger :debug header-data)
   (parse-header req header-data)
+
   (server-logger :debug body-data)
   (parse-body req body-data)
   ))
