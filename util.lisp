@@ -27,6 +27,18 @@
         collect (subseq string i j)
         while j))
 
+
+(defun partition (string separator &optional e)
+  "
+  "
+  (let ((index (position separator string)))
+    (if index
+      (list (subseq string 0 index) (subseq string (1+ index)))
+      (if e
+        (list string nil)
+        (list string)))))
+
+
 (defun split-str (string &optional (separator " "))
   "
   ;; split string
