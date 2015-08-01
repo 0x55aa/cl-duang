@@ -11,6 +11,8 @@
                (:file "util")
                (:file "logging")
 
+               (:file "cookies")
+
                (:file "server")
                (:file "request")
                (:file "web")))
